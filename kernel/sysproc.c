@@ -7,6 +7,24 @@
 #include "proc.h"
 #include "vm.h"
 
+// declaração externa para o array de contagem de syscalls
+extern int syscall_counts[];
+
+uint64
+sys_getcnt(void)
+{
+  int syscall_num;
+  
+  argint(0, &syscall_num);    // numero da syscall vem do usuário
+  
+  // validar numero da syscall
+  if(syscall_num < 0 || syscall_num >= 25) { // ajustar ao máximo
+    return -1;
+  }
+  
+  return syscall_counts[syscall_num];
+}
+
 uint64
 sys_exit(void)
 {
